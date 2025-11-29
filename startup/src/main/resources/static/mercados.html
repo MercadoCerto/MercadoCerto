@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mercados</title>
+
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet"
+          href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+</head>
+
+<body>
+
+    <!-- HEADER -->
+    <header class="faixa-superior">
+        <h1 class="marca">
+            <span class="logo-preta">Mercado</span><span class="logo-roxa">Certo</span>
+        </h1>
+    </header>
+
+    <main class="conteudo-principal">
+
+        <section class="cartao" style="max-width: 700px; width: 100%;">
+
+            <h2>Mercados</h2>
+
+            <!-- LISTA DE MERCADOS -->
+            <div id="listaMercados" class="lista-produtos" style="margin-top: 25px;">
+                <!-- JS irá inserir aqui -->
+            </div>
+
+            <p class="texto-login">
+                <a href="index.html" class="link-login">Voltar ao início</a>
+            </p>
+
+        </section>
+
+    </main>
+
+    <!-- ================= MODAL ================= -->
+    <div id="modal-bg" class="modal-bg" style="display: none;">
+        <div class="modal">
+
+            <h3>Avaliar Mercado</h3>
+
+            <div id="starsBox" class="stars-box">
+                <i class="fa fa-star estrela" data-star="1"></i>
+                <i class="fa fa-star estrela" data-star="2"></i>
+                <i class="fa fa-star estrela" data-star="3"></i>
+                <i class="fa fa-star estrela" data-star="4"></i>
+                <i class="fa fa-star estrela" data-star="5"></i>
+            </div>
+
+            <button id="btnEnviarAvaliacao" class="botao-cadastro">
+                Enviar Avaliação
+            </button>
+
+            <button onclick="fecharModal()" class="botao-cadastro botao-cancelar">
+                Cancelar
+            </button>
+
+        </div>
+    </div>
+
+    <script src="js/mercados.js"></script>
+
+</body>
+
+</html>

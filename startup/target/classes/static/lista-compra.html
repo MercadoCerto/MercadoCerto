@@ -1,0 +1,75 @@
+﻿<!doctype html>
+<html lang='pt-BR'>
+
+<head>
+    <meta charset='utf-8' />
+    <meta name='viewport' content='width=device-width,initial-scale=1' />
+    <title>Lista de Compras</title>
+    <link rel='stylesheet' href='css/style.css' />
+</head>
+
+<body>
+
+    <!-- TOPO -->
+    <div class='faixa-superior'>
+        <h1 class='marca'><span class="logo-preta">Mercado</span><span class="logo-roxa">Certo</span></h1>
+    </div>
+
+    <main class='conteudo-principal'>
+
+        <section class='card-form'>
+
+            <h2>Criar Lista de Compras</h2>
+
+            <form id='form-lista' class="formulario-cadastro">
+
+                <label for="listaNome">Nome da Lista <span class="obrigatorio">*</span></label>
+                <input id='listaNome' placeholder="Ex: Lista do mês" required />
+
+                <label for="listaItens">Itens (1 por linha — item:quantidade)</label>
+                <textarea id='listaItens' placeholder="Arroz:2&#10;Feijão:1&#10;Leite:3"></textarea>
+
+                <button class="botao-cadastro" type='submit'>Salvar Lista</button>
+
+            </form>
+
+            <p class="texto-login">Deseja voltar?
+                <a href="index.html" class="link-login">Voltar ao início</a>
+            </p>
+
+        </section>
+
+    </main>
+
+    <script src='js/main.js'></script>
+
+    <script>
+        document.getElementById("form-lista").addEventListener("submit", (e) => {
+            e.preventDefault();
+
+            const nome = document.getElementById("listaNome").value.trim();
+            const itens = document.getElementById("listaItens").value.trim();
+
+            if (!nome) {
+                toast("Dê um nome à sua lista!");
+                return;
+            }
+
+            const lista = {
+                nome: nome,
+                itens: itens.split("\n").map(l => l.trim()).filter(l => l !== "")
+            };
+
+            // salva no localStorage
+            const listasSalvas = JSON.parse(localStorage.getItem("listas")) || [];
+            listasSalvas.push(lista);
+            localStorage.setItem("listas", JSON.stringify(listasSalvas));
+
+            toast("Lista salva com sucesso!");
+            document.getElementById("form-lista").reset();
+        });
+    </script>
+
+</body>
+
+</html>

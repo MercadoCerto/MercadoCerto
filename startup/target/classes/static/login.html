@@ -1,0 +1,53 @@
+﻿<!doctype html>
+<html lang="pt-BR">
+
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>MercadoCerto - Login</title>
+    <link rel="stylesheet" href="css/style.css" />
+</head>
+
+<body>
+
+    <!-- TOPO -->
+    <header class="faixa-superior">
+        <h1 class="marca">
+            <span class="logo-preta">Mercado</span><span class="logo-roxa">Certo</span>
+        </h1>
+    </header>
+
+    <!-- CONTEÚDO -->
+    <main class="conteudo-principal">
+
+        <section class="cartao" aria-labelledby="titulo-login">
+            <h2 id="titulo-login">Acessar Conta</h2>
+
+            <form id="form-login" class="formulario-cadastro">
+
+                <label for="login">Email ou Usuário <span class="obrigatorio">*</span></label>
+                <input id="login" type="text" placeholder="Digite seu login" required />
+
+                <label for="password">Senha <span class="obrigatorio">*</span></label>
+                <input id="password" type="password" placeholder="Digite sua senha" required />
+
+                <button type="submit" class="botao-cadastro">ENTRAR</button>
+            </form>
+
+            <p class="texto-login">
+                Não tem conta?
+                <a href="cadastro.html" class="link-login">Criar cadastro</a>
+            </p>
+
+            <p class="texto-login">
+                <a href="index.html" class="link-login">Voltar ao início</a>
+            </p>
+
+        </section>
+    </main>
+
+    <script src="js/main.js"></script>
+    <script src="js/login.js"></script>
+</body>
+
+</html>

@@ -1,0 +1,59 @@
+﻿<!doctype html>
+<html lang="pt-BR">
+
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1" />
+    <title>Cadastro - MercadoCerto</title>
+
+    <link rel="stylesheet" href="css/style.css" />
+    <link rel="stylesheet"
+        href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+</head>
+
+<body>
+
+    <!-- TOPO -->
+    <header class="faixa-superior">
+        <h1 class="marca">
+            <span class="logo-preta">Mercado</span>
+            <span class="logo-roxa">Certo</span>
+        </h1>
+    </header>
+
+    <main class="conteudo-principal">
+
+        <section class="cartao" style="max-width: 420px;">
+
+            <h2 style="margin-bottom: 20px;">Criar Conta</h2>
+
+            <form id="form-cadastro" class="formulario-cadastro">
+
+                <label for="nome">Nome Completo <span class="obrigatorio">*</span></label>
+                <input id="nome" type="text" placeholder="Seu nome" required />
+
+                <label for="email">Email <span class="obrigatorio">*</span></label>
+                <input id="email" type="email" placeholder="email@exemplo.com" required />
+
+                <label for="senha">Senha <span class="obrigatorio">*</span></label>
+                <input id="senha" type="password" placeholder="Mínimo 6 caracteres" required />
+
+                <button class="botao-cadastro" type="submit">
+                    <i class="fa fa-user-plus"></i> Criar Conta
+                </button>
+            </form>
+
+            <p class="texto-login" style="margin-top: 15px;">
+                Já possui conta?
+                <a href="login.html" class="link-login">Entrar</a>
+            </p>
+
+        </section>
+    </main>
+
+    <script src="js/main.js"></script>
+    <script src="js/cadastro.js"></script>
+
+</body>
+
+</html>
