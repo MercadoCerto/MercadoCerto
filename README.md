@@ -1,5 +1,4 @@
 MercadoCerto
-Seu comparador inteligente de mercados, produtos e avaliações.
 
 Descrição do Projeto
 
