@@ -1,0 +1,89 @@
+﻿<!DOCTYPE html>
+<html lang="pt-BR">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Lista de Produtos</title>
+    <link rel="stylesheet" href="css/style.css">
+</head>
+
+<body>
+
+    <!-- TOPO PADRÃO -->
+    <header class="faixa-superior">
+        <h1 class="marca">
+            <span class="logo-preta">Mercado</span><span class="logo-roxa">Certo</span>
+        </h1>
+    </header>
+
+    <main class="conteudo-principal">
+
+        <section class="cartao">
+            <h2>Produtos Cadastrados</h2>
+
+            <div id="produtosList" class="lista-produtos"></div>
+
+            <p class="texto-login">
+                <a href="index.html" class="link-login">Voltar ao início</a>
+            </p>
+        </section>
+
+    </main>
+
+    <script src="js/main.js"></script>
+
+<script>
+    async function carregarProdutos() {
+        const resposta = await fetch("http://localhost:8080/api/produtos");
+        const produtos = await resposta.json();
+
+        // pegar mercados para mostrar o nome
+        const resMercados = await fetch("http://localhost:8080/api/mercados");
+        const mercados = await resMercados.json();
+
+        const container = document.getElementById("produtosList");
+        container.innerHTML = "";
+
+        if (produtos.length === 0) {
+            container.innerHTML = "<p>Nenhum produto cadastrado ainda.</p>";
+            return;
+        }
+
+        produtos.forEach(prod => {
+
+            // procura o nome do mercado correspondente
+            const mercado = mercados.find(m => m.idMercado === prod.idMercado);
+            const nomeMercado = mercado ? mercado.nomeMercado : "Não informado";
+
+            const item = document.createElement("div");
+            item.className = "produto-card";
+
+            const imagemUrl = prod.imagem
+                ? `http://localhost:8080/uploads/${prod.imagem}`
+                : "https://via.placeholder.com/120?text=Sem+Imagem";
+
+            item.innerHTML = `
+                <img src="${imagemUrl}" class="produto-img" alt="Imagem do produto" />
+
+                <div class="produto-info">
+                    <h3>${prod.nomeProduto}</h3>
+                    <p><strong>Marca:</strong> ${prod.marca}</p>
+                    <p><strong>Categoria:</strong> ${prod.categoria}</p>
+                    <p><strong>Código de Barras:</strong> ${prod.codigoBarras}</p>
+                    <p><strong>Validade:</strong> ${prod.validade}</p>
+                    <p><strong>Preço:</strong> R$ ${prod.preco?.toFixed(2) || "0,00"}</p>
+                    <p><strong>Mercado:</strong> ${nomeMercado}</p>
+                </div>
+            `;
+
+            container.appendChild(item);
+        });
+    }
+
+    carregarProdutos();
+</script>
+
+</body>
+
+</html>

@@ -1,0 +1,157 @@
+﻿<!DOCTYPE html>
+<html lang="pt-BR">
+
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>MercadoCerto - Cadastrar Produto</title>
+
+  <link rel="stylesheet" href="css/style.css" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+</head>
+
+<body>
+
+  <header class="faixa-superior">
+    <button id="menu-toggle" class="menu-btn">
+      <i class="fa fa-bars"></i>
+    </button>
+
+    <h1 class="marca">
+      <span class="logo-preta">Mercado</span><span class="logo-roxa">Certo</span>
+    </h1>
+  </header>
+
+  <!-- MENU LATERAL -->
+  <nav id="menu-lateral" class="menu-lateral">
+    <div class="menu-topo">
+      <button id="fechar-menu" class="fechar-btn">×</button>
+    </div>
+
+    <ul>
+      <li><i class="fa fa-user"></i> Perfil</li>
+      <li><i class="fa fa-shopping-cart"></i> Carrinho</li>
+      <li><i class="fa fa-book"></i> Menu</li>
+      <li><i class="fa fa-truck"></i> Entrega</li>
+      <li><i class="fa fa-phone"></i> Contato</li>
+      <li><i class="fa fa-users"></i> Sobre-nós</li>
+    </ul>
+  </nav>
+
+  <main class="conteudo-principal">
+    <section class="card-form" aria-labelledby="titulo-cadastro-produto">
+      <h2 id="titulo-cadastro-produto">Cadastrar Produto</h2>
+
+      <!-- FORMULÁRIO PADRONIZADO -->
+      <form id="form-produto" class="formulario-cadastro" enctype="multipart/form-data">
+
+
+        <label for="nome">Produto <span class="obrigatorio">*</span></label>
+        <input id="nome" type="text" placeholder="Nome do produto" required />
+
+        <label for="marca">Marca <span class="obrigatorio">*</span></label>
+        <input id="marca" type="text" placeholder="Marca" required />
+
+        <label for="categoria">Categoria <span class="obrigatorio">*</span></label>
+        <input id="categoria" type="text" placeholder="Categoria" required />
+
+        <label for="validade">Data de Validade <span class="obrigatorio">*</span></label>
+        <input id="validade" type="date" required />
+
+        <label for="codigoBarras">Código de Barras <span class="obrigatorio">*</span></label>
+        <input id="codigoBarras" type="text" placeholder="Ex: 7891234567890" required />
+
+        <label for="preco">Preço <span class="obrigatorio">*</span></label>
+        <input id="preco" type="number" step="0.01" placeholder="Ex: 9.99" required />
+
+        <label for="mercado">Mercado <span class="obrigatorio">*</span></label>
+        <select id="mercado" required>
+          <option value="">Selecione um mercado</option>
+        </select>
+        <label for="imagem">Imagem do Produto</label>
+        <input id="imagem" type="file" accept="image/*" />
+
+        <button type="submit" class="botao-cadastro">CADASTRAR PRODUTO</button>
+      </form>
+
+      <p class="texto-login">
+        Deseja voltar?
+        <a href="index.html" class="link-login">Voltar ao início</a>
+      </p>
+    </section>
+  </main>
+
+  <!-- MENU SCRIPT -->
+<script>
+    async function carregarMercados() {
+      const selectMercado = document.getElementById("mercado");
+
+      try {
+        const resposta = await fetch("http://localhost:8080/api/mercados");
+
+        if (!resposta.ok) {
+          throw new Error("Erro ao carregar mercados");
+        }
+
+        const mercados = await resposta.json();
+
+        mercados.forEach(m => {
+          const option = document.createElement("option");
+          option.value = m.idMercado;
+          option.textContent = m.nomeMercado;
+          selectMercado.appendChild(option);
+        });
+
+      } catch (erro) {
+        console.error("Falha ao listar mercados:", erro);
+        alert("Erro ao carregar mercados. Verifique o backend.");
+      }
+    }
+
+
+    document.getElementById("form-produto").addEventListener("submit", async (e) => {
+      e.preventDefault();
+
+      const produto = {
+        nomeProduto: document.getElementById("nome").value,
+        marca: document.getElementById("marca").value,
+        categoria: document.getElementById("categoria").value,
+        validade: document.getElementById("validade").value,
+        codigoBarras: document.getElementById("codigoBarras").value,
+        preco: parseFloat(document.getElementById("preco").value),
+        idMercado: parseInt(document.getElementById("mercado").value)
+      };
+
+      const imagem = document.getElementById("imagem").files[0];
+
+      const formData = new FormData();
+
+formData.append("produto", JSON.stringify(produto));
+formData.append("idMercado", produto.idMercado);
+
+if (imagem) {
+    formData.append("imagem", imagem);
+}
+
+      const resposta = await fetch("http://localhost:8080/api/produtos/cadastrar", {
+        method: "POST",
+        body: formData
+      });
+
+      if (resposta.ok) {
+        alert("Produto cadastrado com sucesso!");
+        document.getElementById("form-produto").reset();
+      } else {
+        const txt = await resposta.text();
+        alert("Erro ao cadastrar produto! " + txt);
+      }
+    });
+
+    carregarMercados();
+  </script>
+
+
+
+</body>
+
+</html>
